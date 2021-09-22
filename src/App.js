@@ -6,7 +6,9 @@ class App extends React.Component{
     super(props);
     this.state ={
       cityName:'',
-      locationResult: {},
+     data1:[],
+     data2:[],
+     data3:[],
       showLocInfo: false
     }
   }
@@ -18,13 +20,17 @@ class App extends React.Component{
       cityName : e.target.city.value
     })
 
-    let reqURl = `https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_API_KEY}&q=${this.state.cityName}&format=json`;
+    let reqURl = `http://localhost:3001/weather?cityname=${this.state.cityName}`;
 
     let locResult = await axios.get(reqURl);
     
-
+    console.log('test', locResult.data[0].date);
     this.setState({
-      locationResult: locResult.data[0],
+      data1:["Date:  "+ locResult.data[0].date," Descrption:  "+  locResult.data[0].description],
+
+      data2:["Date:  "+ locResult.data[1].date," Descrption:  "+  locResult.data[1].description],
+
+      data3:["Date:  "+ locResult.data[2].date," Descrption:  "+  locResult.data[2].description],
       showLocInfo: true
     })
   }
@@ -44,10 +50,12 @@ class App extends React.Component{
           {this.state.showLocInfo &&
             <>
               <p>City Name: {this.state.cityName}</p>
-              <p>latitude: {this.state.locationResult.lat}</p>
-              <p>longitude: {this.state.locationResult.lon}</p>
+              <p> {this.state.data1}</p>
+              <p> {this.state.data2}</p>
+              <p> {this.state.data3}</p>
+             
 
-              <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_API_KEY}&center=${this.state.locationResult.lat},${this.state.locationResult.lon}&zoom=10`} alt="map" />
+             
 
             
             </>
