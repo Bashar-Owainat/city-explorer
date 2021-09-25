@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Weather from "./Weather";
+import Movie from "./Movie";
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 class App extends React.Component{
@@ -13,7 +14,8 @@ class App extends React.Component{
      data2:[],
      data3:[],
      data:[],
-      showLocInfo: false
+      showLocInfo: false,
+      movieData:[]
     }
   }
 
@@ -40,8 +42,9 @@ class App extends React.Component{
   // }
 
   //`http://localhost:3001/weather?cityname=${this.state.cityName}`
+
   getWeather = async (e) => {
-    e.preventDefault();
+     e.preventDefault();
     await this.setState({
       cityName : e.target.city.value
        })
@@ -51,9 +54,22 @@ class App extends React.Component{
    console.log(response.data);
    this.setState({
       data:response.data,
-     // showLocInfo: true
+     showLocInfo: true
     })
+
+    this.getMovie();
   }
+
+
+getMovie = async (e) =>{
+  
+  let movieUrl = `http://localhost:3001/movie?searchQuery=${this.state.cityName}&page=1&api_key=${process.env.REACT_APP_MOVIE_KEY}`
+  let response  = await axios.get(movieUrl);
+  this.setState({
+    movieData: response.data
+  })
+}
+
 
   render() {
     return(
@@ -65,9 +81,6 @@ class App extends React.Component{
             </form>
 
             
-
-           
-            
             {this.state.data.map(e=>{
               
               return (
@@ -78,6 +91,15 @@ class App extends React.Component{
                 
             })
            
+            }
+
+            {this.state.movieData.map(e=>{
+
+              return(
+                <Movie show = {e}/>
+              );
+
+            })
             }
            
 
