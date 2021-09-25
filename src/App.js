@@ -51,7 +51,7 @@ getMovie = async (e) =>{
   })
 }
 getLocation = async (e) =>{
-  let locUrl = `http://www.mapquestapi.com/geocoding/v1/address?key=${process.env.REACT_APP_API_KEY}&location=${this.state.cityName}`
+  let locUrl = `https://www.mapquestapi.com/geocoding/v1/address?key=${process.env.REACT_APP_API_KEY}&location=${this.state.cityName}`
   let response = await axios.get(locUrl);
   console.log(response.data.results[0].locations[0].displayLatLng.lat);
   console.log(response.data.results[0].locations[0].displayLatLng.lng);
