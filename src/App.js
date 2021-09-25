@@ -45,9 +45,6 @@ getMovie = async (e) =>{
     movieData: response.data
   })
 }
-getLocation = async (e) => {
-  let LocUrl = ``;
-}
 
   render() {
     return(
