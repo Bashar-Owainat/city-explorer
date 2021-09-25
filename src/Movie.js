@@ -15,7 +15,7 @@ class Movie extends Component {
                 >
                     <Card.Header></Card.Header>
                     <Card.Body>
-                        <Card.Title> Weather </Card.Title>
+                        <Card.Title> Movie </Card.Title>
                         <Card.Text>
                            <p>Title: {this.props.show.title}</p>
                            <p>Overview: {this.props.show.overview}</p>

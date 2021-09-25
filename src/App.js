@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Weather from "./Weather";
 import Movie from "./Movie";
+import Location from "./Location";
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 class App extends React.Component{
@@ -12,7 +13,10 @@ class App extends React.Component{
       cityName:'',
      data:[],
       showLocInfo: false,
-      movieData:[]
+      movieData:[], 
+      locData:[], 
+      lat:'', 
+      lng:''
     }
   }
 
@@ -34,6 +38,7 @@ class App extends React.Component{
     })
 
     this.getMovie();
+    this.getLocation();
   }
 
 
@@ -45,7 +50,17 @@ getMovie = async (e) =>{
     movieData: response.data
   })
 }
+getLocation = async (e) =>{
+  let locUrl = `http://www.mapquestapi.com/geocoding/v1/address?key=${process.env.REACT_APP_API_KEY}&location=${this.state.cityName}`
+  let response = await axios.get(locUrl);
+  console.log(response.data.results[0].locations[0].displayLatLng.lat);
+  console.log(response.data.results[0].locations[0].displayLatLng.lng);
+  this.setState({
+  lat:response.data.results[0].locations[0].displayLatLng.lat, 
+  lng:response.data.results[0].locations[0].displayLatLng.lng
+  })
 
+}
   render() {
     return(
         <div>
@@ -55,8 +70,18 @@ getMovie = async (e) =>{
               <input type="submit" value='Explore!' />
             </form>
 
-            
-            {this.state.data.map(e=>{
+            {this.state.showLocInfo&&
+            <Location 
+            Name={this.state.cityName}
+            Lat={this.state.lat}
+            Lng={this.state.lng}
+           />
+           }
+           
+            <img src={`https://www.mapquestapi.com/staticmap/v4/getmap?key=${process.env.REACT_APP_API_KEY}&size=600,400&zoom=13&center=${this.state.lat},${this.state.lng}`} alt="" />
+ 
+            {
+            this.state.data.map(e=>{
               
               return (
                
@@ -76,6 +101,7 @@ getMovie = async (e) =>{
 
             })
             }
+
            
 
        </div>
