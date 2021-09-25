@@ -10,36 +10,12 @@ class App extends React.Component{
     super(props);
     this.state ={
       cityName:'',
-     data1:[],
-     data2:[],
-     data3:[],
      data:[],
       showLocInfo: false,
       movieData:[]
     }
   }
 
-  // getLocation = async (e) => {
-  //   e.preventDefault();
-    
-  //   await this.setState({
-  //     cityName : e.target.city.value
-  //   })
-  //   
-  //   let reqURl =  ;
-
-  //   let locResult = await axios.get(reqURl);
-    
-  //   console.log('test', locResult.data[0].date);
-  //   this.setState({
-  //     data1:["Date:  "+ locResult.data[0].date," Descrption:  "+  locResult.data[0].description],
-
-  //     data2:["Date:  "+ locResult.data[1].date," Descrption:  "+  locResult.data[1].description],
-
-  //     data3:["Date:  "+ locResult.data[2].date," Descrption:  "+  locResult.data[2].description],
-  //     showLocInfo: true
-  //   })
-  // }
 
   //`http://localhost:3001/weather?cityname=${this.state.cityName}`
 
@@ -49,7 +25,7 @@ class App extends React.Component{
       cityName : e.target.city.value
        })
 
-   let weatherUrl = `http://localhost:3001/weather?cityname=${this.state.cityName}`;
+   let weatherUrl = `https://bashar-city-explorer-api.herokuapp.com/weather?cityname=${this.state.cityName}`;
    let response = await axios.get(weatherUrl);
    console.log(response.data);
    this.setState({
@@ -63,13 +39,15 @@ class App extends React.Component{
 
 getMovie = async (e) =>{
   
-  let movieUrl = `http://localhost:3001/movie?searchQuery=${this.state.cityName}&page=1&api_key=${process.env.REACT_APP_MOVIE_KEY}`
+  let movieUrl = `https://bashar-city-explorer-api.herokuapp.com/movie?searchQuery=${this.state.cityName}&page=1&api_key=${process.env.REACT_APP_MOVIE_KEY}`
   let response  = await axios.get(movieUrl);
   this.setState({
     movieData: response.data
   })
 }
-
+getLocation = async (e) => {
+  let LocUrl = ``;
+}
 
   render() {
     return(
