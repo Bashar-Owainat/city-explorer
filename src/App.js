@@ -3,8 +3,8 @@ import axios from "axios";
 import Weather from "./Weather";
 import Movie from "./Movie";
 import Location from "./Location";
-
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+
 class App extends React.Component{
 
   constructor(props){
